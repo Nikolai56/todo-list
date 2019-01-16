@@ -1,28 +1,57 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
+import Header from './components/Header';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const Input = styled.input`
+    border: none;
+    flex: 1;
+    font-size: 20px;
+    outline: none;
+    padding: 0;
+    line-height: 2.4rem;
+`;
+
+class App extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.inputRef = React.createRef();
+
+        this.state = {
+            text: '',
+        };
+    }
+
+    componentDidMount() {
+        this.inputRef.current.focus();
+    }
+
+    onChangeInputText = event =>
+        this.setState({text: event.target.value});
+
+    render() {
+        return (
+            <Container>
+                <Header />
+                <Input
+                    type="text"
+                    ref={this.inputRef}
+                    placeholder="your todo text"
+                    value={this.state.text}
+                    onChange={this.onChangeInputText}
+                    // onFocus={this.handleInputFocus}
+                    // onBlur={this.handleInputBlur}
+                />
+                <span>{this.state.text}</span>
+            </Container>
+        );
+    }
 }
 
 export default App;
