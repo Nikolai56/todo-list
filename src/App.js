@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import AddTodo from './containers/AddTodo';
+import VisibleTodoList from './containers/VisibleTodoList';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 
 const Container = styled.div`
@@ -49,6 +52,9 @@ class App extends PureComponent {
                     // onBlur={this.handleInputBlur}
                 />
                 <span>{this.state.text}</span>
+                <AddTodo />
+                <VisibleTodoList />
+                <Footer />
             </Container>
         );
     }
