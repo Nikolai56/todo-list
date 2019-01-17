@@ -1,9 +1,17 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../actions';
 
-const AddTodo = ({ dispatch }) => {
-    let input;
+type Action = {+type: string};
+type Dispatch = (action: Action) => any
+type Props = {
+    dispatch: Dispatch,
+    idCounter: number
+};
+
+const AddTodo = ({ idCounter, dispatch }:Props) => {
+    let input = {};
 
     return (
         <div>
@@ -13,7 +21,7 @@ const AddTodo = ({ dispatch }) => {
                     if (!input.value.trim()) {
                         return;
                     }
-                    dispatch(addTodo(input.value));
+                    dispatch(addTodo(idCounter, input.value));
                     input.value = '';
                 }}
             >
@@ -24,4 +32,8 @@ const AddTodo = ({ dispatch }) => {
     );
 };
 
-export default connect()(AddTodo);
+const mapStateToProps = state => {
+    return { idCounter: state.idCounter };
+};
+
+export default connect(mapStateToProps)(AddTodo);
