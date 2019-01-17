@@ -30,6 +30,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-eslint": "9.0.0",
     "flow-bin": "^0.90.0",
     "gh-pages": "^2.0.1"
   }
