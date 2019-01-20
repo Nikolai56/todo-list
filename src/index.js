@@ -11,6 +11,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const persistConfig = {
+    blacklist: ['todos', 'idCounter'],
     key: 'root',
     storage,
 };
