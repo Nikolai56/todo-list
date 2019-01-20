@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import AddTodo from './containers/AddTodo';
-import VisibleTodoList from './containers/VisibleTodoList';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import DnDBoard from './dnd/DnDBoard';
@@ -53,7 +52,6 @@ class App extends PureComponent {
                 />*/}
                 <span>{this.state.text}</span>
                 <AddTodo />
-                <VisibleTodoList />
                 <Footer />
                 <DnDBoard />
             </Container>

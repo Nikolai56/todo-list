@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Card from '../dnd/Card';
 
-const Todo = ({ onClick, completed, text }) => (
-    <li
+const Todo = ({ onClick, completed, text, id }) => (
+    <Card
         onClick={onClick}
         style={{
             textDecoration: completed ? 'line-through' : 'none'
         }}
-    >
-        {text}
-    </li>
+        text={text}
+        id={id}
+    />
 );
 
 Todo.propTypes = {

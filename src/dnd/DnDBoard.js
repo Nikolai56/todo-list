@@ -2,12 +2,12 @@ import React from 'react';
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Dustbin from './Dustbin';
-import DragSource from './DragSource';
+import VisibleTodoList from '../containers/VisibleTodoList';
 
 export default function DnDBoard() {
     return (
         <DragDropContextProvider backend={HTML5Backend}>
-            <DragSource />
+            <VisibleTodoList />
             <Dustbin />
         </DragDropContextProvider>
     );

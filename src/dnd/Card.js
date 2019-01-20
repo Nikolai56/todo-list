@@ -8,9 +8,13 @@ import ItemTypes from './ItemTypes';
 // the rest of your app's constants.
 
 const cardStyle: React.CSSProperties = {
-    fontSize: 28,
+    fontSize: 22,
+    lineHeight: 1.5,
     border: '1px solid #000',
     borderRadius: '8px',
+    padding: '0 10px',
+    width: 300,
+    marginBottom: 12,
 };
 
 /**
@@ -51,7 +55,7 @@ function collect(connect, monitor) {
 
 function Card(props) {
     // Your component receives its own props as usual
-    const { id } = props;
+    const { id, onClick, text, style } = props;
 
     // These two props are injected by React DnD,
     // as defined by your `collect` function above:
@@ -59,13 +63,15 @@ function Card(props) {
 
     return connectDragSource(
         <div
+            onClick={onClick}
             style={{
                 ...cardStyle,
                 opacity: isDragging ? 0.5 : 1,
                 cursor: isDragging ? 'grabbing' : 'grab',
+                ...style,
             }}
         >
-            I am a draggable card number {id}
+            {`${text} ${id}`}
             {isDragging && ' (and I am being dragged now)'}
         </div>
     );
