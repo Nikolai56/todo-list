@@ -25,7 +25,7 @@ const AddTodo = ({ idCounter, dispatch }:Props) => {
                     input.value = '';
                 }}
             >
-                <input ref={node => (input = node)} />
+                <input autoFocus ref={node => (input = node)} />
                 <button type="submit">Add Todo</button>
             </form>
         </div>

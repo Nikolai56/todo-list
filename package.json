@@ -1,8 +1,14 @@
 {
   "name": "todo-list",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
+  "description": "Todo list on react-dnd and redux",
   "homepage": "https://nikolai56.github.io/todo-list",
+  "author": "Nikolai56 (https://github.com/Nikolai56)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nikolai56/todo-list.git"
+  },
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
