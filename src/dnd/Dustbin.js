@@ -20,7 +20,7 @@ const style: React.CSSProperties = {
     float: 'left',
 };
 
-const boxTarget = {
+const cardTarget = {
     drop() {
         return { name: 'Dustbin' };
     },
@@ -54,7 +54,7 @@ class Dustbin extends React.Component<DustbinProps> {
 
 export default DropTarget(
     ItemTypes.CARD,
-    boxTarget,
+    cardTarget,
     (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
         connectDropTarget: connect.dropTarget(),
         isOver: monitor.isOver(),

@@ -1,6 +1,7 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 import ItemTypes from './ItemTypes';
+// import { removeTodo } from '../actions';
 
 // Drag sources and drop targets only interact
 // if they have the same string type.
@@ -23,19 +24,30 @@ const cardStyle: React.CSSProperties = {
  */
 const cardSource = {
     beginDrag(props) {
+        console.log('beginDrag props', props);
         // Return the data describing the dragged item
         const item = { id: props.id };
         return item;
     },
 
     endDrag(props, monitor, component) {
+        console.log('endDrag props', props);
+        console.log('props', component);
         if (!monitor.didDrop()) {
             return;
         }
 
         // When dropped on a compatible target, do something
         const item = monitor.getItem();
+        console.log('item', item);
         const dropResult = monitor.getDropResult();
+
+        if (dropResult) {
+            console.log('dropResult', dropResult);
+            props.onDropToDustbin();
+            // props.dispatch(removeTodo(item.id));
+            // alert(`You dropped ${item.id} into ${dropResult.name}!`);
+        }
         // CardActions.moveCardToList(item.id, dropResult.listId);
     }
 };
@@ -72,7 +84,6 @@ function Card(props) {
             }}
         >
             {`${text} ${id}`}
-            {isDragging && ' (and I am being dragged now)'}
         </div>
     );
 }
