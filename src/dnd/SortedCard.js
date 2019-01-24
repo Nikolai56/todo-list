@@ -14,7 +14,7 @@ import {
 } from 'react-dnd';
 import ItemTypes from './ItemTypes';
 
-const style = {
+const baseStyle = {
     border: '1px dashed gray',
     padding: '0.5rem 1rem',
     marginBottom: '.5rem',
@@ -107,7 +107,8 @@ const cardTarget = {
 };
 
 export interface CardProps {
-    id: any,
+    id: number,
+    style: Object,
     text: string,
     index: number,
     onClick: () => void,
@@ -134,6 +135,7 @@ class Card extends React.Component<
             connectDropTarget,
             onClick,
             index,
+            style
         } = this.props;
         const opacity = isDragging ? 0 : 1;
 
@@ -142,9 +144,10 @@ class Card extends React.Component<
                 <div
                     onClick={onClick}
                     style={{
-                        ...style,
+                        ...baseStyle,
                         cursor: isDragging ? 'grabbing' : 'grab',
-                        opacity
+                        opacity,
+                        ...style
                     }}
                 >
                     {index+1} {text}
