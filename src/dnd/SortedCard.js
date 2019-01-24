@@ -1,7 +1,7 @@
 // @flow
 
-import * as React from 'react'
-import { findDOMNode } from 'react-dom'
+import * as React from 'react';
+import { findDOMNode } from 'react-dom';
 import {
     DragSource,
     DropTarget,
@@ -11,9 +11,8 @@ import {
     DropTargetConnector,
     DragSourceConnector,
     DragSourceMonitor,
-} from 'react-dnd'
-import ItemTypes from './ItemTypes'
-import { XYCoord } from 'dnd-core'
+} from 'react-dnd';
+import ItemTypes from './ItemTypes';
 
 const style = {
     border: '1px dashed gray',
@@ -21,14 +20,14 @@ const style = {
     marginBottom: '.5rem',
     backgroundColor: 'white',
     cursor: 'move',
-}
+};
 
 const cardSource = {
     beginDrag(props: CardProps) {
         return {
             id: props.id,
             index: props.index,
-        }
+        };
     },
     endDrag(props, monitor, component) {
         console.log('endDrag props', props);
@@ -53,34 +52,34 @@ const cardSource = {
         }
         // CardActions.moveCardToList(item.id, dropResult.listId);
     }
-}
+};
 
 const cardTarget = {
     hover(props: CardProps, monitor: DropTargetMonitor, component: Card | null) {
         if (!component) {
-            return null
+            return null;
         }
-        const dragIndex = monitor.getItem().index
-        const hoverIndex = props.index
+        const dragIndex = monitor.getItem().index;
+        const hoverIndex = props.index;
 
         // Don't replace items with themselves
         if (dragIndex === hoverIndex) {
-            return
+            return;
         }
 
         // Determine rectangle on screen
         const hoverBoundingRect = (findDOMNode(
             component,
-        )).getBoundingClientRect()
+        )).getBoundingClientRect();
 
         // Get vertical middle
-        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
         // Determine mouse position
-        const clientOffset = monitor.getClientOffset()
+        const clientOffset = monitor.getClientOffset();
 
         // Get pixels to the top
-        const hoverClientY = (clientOffset).y - hoverBoundingRect.top
+        const hoverClientY = (clientOffset).y - hoverBoundingRect.top;
 
         // Only perform the move when the mouse has crossed half of the items height
         // When dragging downwards, only move when the cursor is below 50%
@@ -88,24 +87,24 @@ const cardTarget = {
 
         // Dragging downwards
         if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-            return
+            return;
         }
 
         // Dragging upwards
         if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-            return
+            return;
         }
 
         // Time to actually perform the action
-        props.moveCard(dragIndex, hoverIndex)
+        props.moveCard(dragIndex, hoverIndex);
 
         // Note: we're mutating the monitor item here!
         // Generally it's better to avoid mutations,
         // but it's good here for the sake of performance
         // to avoid expensive index searches.
-        monitor.getItem().index = hoverIndex
+        monitor.getItem().index = hoverIndex;
     },
-}
+};
 
 export interface CardProps {
     id: any,
@@ -135,8 +134,8 @@ class Card extends React.Component<
             connectDropTarget,
             onClick,
             index,
-        } = this.props
-        const opacity = isDragging ? 0 : 1
+        } = this.props;
+        const opacity = isDragging ? 0 : 1;
 
         return connectDragSource(
             connectDropTarget(
@@ -151,7 +150,7 @@ class Card extends React.Component<
                     {index+1} {text}
                 </div>
             ),
-        )
+        );
     }
 }
 
@@ -170,4 +169,4 @@ export default DropTarget<CardProps, CardTargetCollectedProps>(
             isDragging: monitor.isDragging(),
         }),
     )(Card),
-)
+);

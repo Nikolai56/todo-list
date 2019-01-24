@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { findDOMNode } from 'react-dom'
+import * as React from 'react';
+import { findDOMNode } from 'react-dom';
 import {
     DragSource,
     DropTarget,
@@ -9,7 +9,7 @@ import {
     DropTargetConnector,
     DragSourceConnector,
     DragSourceMonitor,
-} from 'react-dnd'
+} from 'react-dnd';
 import ItemTypes from './ItemTypes';
 
 const style: React.CSSProperties = {
