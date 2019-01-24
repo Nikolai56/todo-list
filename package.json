@@ -10,6 +10,7 @@
     "url": "https://github.com/Nikolai56/todo-list.git"
   },
   "dependencies": {
+    "immutability-helper": "^2.9.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dnd": "^7.0.2",

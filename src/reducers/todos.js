@@ -1,6 +1,9 @@
+import update from 'immutability-helper';
+import { ActionTypes } from '../actions';
+
 const todos = (state = [], action) => {
     switch (action.type) {
-    case 'ADD_TODO':
+    case ActionTypes.ADD_TODO:
         return [
             ...state,
             {
@@ -9,12 +12,18 @@ const todos = (state = [], action) => {
                 completed: false
             }
         ];
-    case 'TOGGLE_TODO':
+    case ActionTypes.TOGGLE_TODO:
         return state.map(
             todo =>
                 todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
         );
-    case 'REMOVE_TODO':
+    case ActionTypes.SORT_TODO:
+        const { dragIndex, hoverIndex } = action;
+        const dragCard = state[dragIndex];
+        return update(state, {
+            $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+        });
+    case ActionTypes.REMOVE_TODO:
         return state.filter(todo => todo.id !== action.id);
     default:
         return state;

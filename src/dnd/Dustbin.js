@@ -1,29 +1,45 @@
-import * as React from 'react';
+import * as React from 'react'
+import { findDOMNode } from 'react-dom'
 import {
+    DragSource,
     DropTarget,
-    DropTargetConnector,
-    DropTargetMonitor,
     ConnectDropTarget,
-} from 'react-dnd';
+    ConnectDragSource,
+    DropTargetMonitor,
+    DropTargetConnector,
+    DragSourceConnector,
+    DragSourceMonitor,
+} from 'react-dnd'
 import ItemTypes from './ItemTypes';
 
 const style: React.CSSProperties = {
-    height: '12rem',
-    width: '12rem',
-    marginRight: '1.5rem',
-    marginBottom: '1.5rem',
+    height: 120,
+    marginTop: 'auto',
     color: 'white',
     padding: '1rem',
     textAlign: 'center',
-    fontSize: '1rem',
-    lineHeight: 'normal',
-    float: 'left',
 };
 
 const cardTarget = {
     drop() {
         return { name: 'Dustbin' };
     },
+    hover(props, monitor: DropTargetMonitor, component) {
+        // This is fired very often and lets you perform side effects
+        // in response to the hover. You can't handle enter and leave
+        // here—if you need them, put monitor.isOver() into collect() so you
+        // can just use componentDidUpdate() to handle enter/leave.
+
+        // You can access the coordinates if you need them
+        const clientOffset = monitor.getClientOffset();
+        const componentRect = findDOMNode(component).getBoundingClientRect();
+
+        // You can check whether we're over a nested drop target
+        const isJustOverThisOne = monitor.isOver({ shallow: true });
+
+        // You will receive hover() even for items for which canDrop() is false
+        const canDrop = monitor.canDrop();
+    }
 };
 
 export interface DustbinProps {
@@ -46,7 +62,7 @@ class Dustbin extends React.Component<DustbinProps> {
 
         return connectDropTarget(
             <div style={{ ...style, backgroundColor }}>
-                {isActive ? 'Release to drop' : 'Drag a box here'}
+                {isActive ? 'Release to drop' : 'Drag a card here to remove'}
             </div>,
         );
     }

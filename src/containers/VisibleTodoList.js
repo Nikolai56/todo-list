@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleTodo, removeTodo } from '../actions';
+import { toggleTodo, removeTodo, sortCard } from '../actions';
 import TodoList from '../components/TodoList';
 import { VisibilityFilters } from '../actions';
 
@@ -22,7 +22,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     toggleTodo: id => dispatch(toggleTodo(id)),
-    removeTodo: id => dispatch(removeTodo(id))
+    removeTodo: id => dispatch(removeTodo(id)),
+    sortCard: (dragIndex, hoverIndex) => dispatch(sortCard(dragIndex, hoverIndex)),
 });
 
 export default connect(
