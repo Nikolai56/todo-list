@@ -4,7 +4,8 @@ import TodoList from '../components/TodoList';
 
 
 const mapStateToProps = state => ({
-    todos: state.todos.filter(todo => todo.listName === 'TodoList')
+    // todos: state.todos.filter(todo => todo.listName === 'InProgressList')
+    todos: state.todos.filter(todo => todo.listName === 'Dustbin')
 });
 
 const mapDispatchToProps = dispatch => ({

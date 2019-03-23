@@ -27,6 +27,7 @@ const Container = styled.header`
     display: flex;
     flex-direction: row;
     height: 50px;
+    flex-shrink: 0;
 `;
 
 const H1 = styled.h1`

@@ -1,6 +1,8 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
+import {bindActionCreators} from "redux";
 import ItemTypes from './ItemTypes';
+import * as TodoActionCreators from "../actions";
 // import { removeTodo } from '../actions';
 
 // Drag sources and drop targets only interact
@@ -31,6 +33,7 @@ const cardSource = {
     },
 
     endDrag(props, monitor, component) {
+        const CardActions = bindActionCreators(TodoActionCreators, props.dispatch);
         console.log('endDrag props', props);
         console.log('props', component);
         if (!monitor.didDrop()) {
@@ -44,9 +47,11 @@ const cardSource = {
 
         if (dropResult) {
             console.log('dropResult', dropResult);
-            props.onDropToDustbin();
-            // props.dispatch(removeTodo(item.id));
-            // alert(`You dropped ${item.id} into ${dropResult.name}!`);
+            // if (dropResult.name === 'Dustbin') {
+            //     // props.onDropToDustbin();
+            //     // CardActions.moveCardToList(item.id, dropResult.name);
+            // }
+            CardActions.moveCardToList(item.id, dropResult.name);
         }
         // CardActions.moveCardToList(item.id, dropResult.listId);
     }
@@ -78,7 +83,7 @@ function Card(props) {
             onClick={onClick}
             style={{
                 ...cardStyle,
-                opacity: isDragging ? 0.5 : 1,
+                opacity: isDragging ? 0 : 1,
                 cursor: isDragging ? 'grabbing' : 'grab',
                 ...style,
             }}

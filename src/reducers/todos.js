@@ -2,6 +2,7 @@ import update from 'immutability-helper';
 import { ActionTypes } from '../actions';
 
 const todos = (state = [], action) => {
+    console.log('reducer action', action);
     switch (action.type) {
     case ActionTypes.ADD_TODO:
         return [
@@ -9,9 +10,15 @@ const todos = (state = [], action) => {
             {
                 id: action.id,
                 text: action.text,
-                completed: false
+                completed: false,
+                listName: 'TodoList'
             }
         ];
+    case ActionTypes.MOVE_CARD_TO_LIST:
+        return state.map(
+            todo =>
+                todo.id === action.id ? { ...todo, listName: action.dropResultListName } : todo
+        );
     case ActionTypes.TOGGLE_TODO:
         return state.map(
             todo =>

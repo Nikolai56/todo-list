@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import { findDOMNode } from 'react-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
     DragSource,
     DropTarget,
@@ -13,6 +15,7 @@ import {
     DragSourceMonitor,
 } from 'react-dnd';
 import ItemTypes from './ItemTypes';
+import * as TodoActionCreators from '../actions';
 
 const baseStyle = {
     border: '1px dashed gray',
@@ -30,23 +33,25 @@ const cardSource = {
         };
     },
     endDrag(props, monitor, component) {
-        console.log('endDrag props', props);
-        console.log('props', component);
+        const CardActions = bindActionCreators(TodoActionCreators, props.dispatch);
+        // console.log('endDrag props', props);
+        // console.log('endDrag component', component);
         if (!monitor.didDrop()) {
             return;
         }
 
         // When dropped on a compatible target, do something
         const item = monitor.getItem();
-        console.log('item', item);
+        // console.log('item', item);
         const dropResult = monitor.getDropResult();
 
         if (dropResult) {
             console.log('dropResult', dropResult);
-            if (dropResult.name === 'Dustbin') {
-                props.onDropToDustbin();
-            }
-
+            // if (dropResult.name === 'Dustbin') {
+            //     // props.onDropToDustbin();
+            //     // CardActions.moveCardToList(item.id, dropResult.name);
+            // }
+            CardActions.moveCardToList(item.id, dropResult.name);
             // props.dispatch(removeTodo(item.id));
             // alert(`You dropped ${item.id} into ${dropResult.name}!`);
         }
@@ -55,6 +60,9 @@ const cardSource = {
 };
 
 const cardTarget = {
+    drop() {
+        return { name: 'TodoList' };
+    },
     hover(props: CardProps, monitor: DropTargetMonitor, component: Card | null) {
         if (!component) {
             return null;
@@ -106,7 +114,7 @@ const cardTarget = {
     },
 };
 
-export interface CardProps {
+export type CardProps = {
     id: number,
     style: Object,
     text: string,
@@ -127,6 +135,26 @@ interface CardTargetCollectedProps {
 class Card extends React.Component<
     CardProps & CardSourceCollectedProps & CardTargetCollectedProps
     > {
+
+    // constructor(props) {
+    //     super(props)
+    //
+    //     const { dispatch } = props
+    //     console.log('constructor Card', dispatch);
+    //
+    //     // Here's a good use case for bindActionCreators:
+    //     // You want a child component to be completely unaware of Redux.
+    //     // We create bound versions of these functions now so we can
+    //     // pass them down to our child later.
+    //
+    //     this.boundActionCreators = bindActionCreators(TodoActionCreators, dispatch)
+    //     console.log('this.boundActionCreators', this.boundActionCreators)
+    //     // {
+    //     //   addTodo: Function,
+    //     //   removeTodo: Function
+    //     // }
+    // }
+
     render() {
         const {
             text,
@@ -137,6 +165,7 @@ class Card extends React.Component<
             index,
             style
         } = this.props;
+        // console.log('class Card', this.props.dispatch);
         const opacity = isDragging ? 0 : 1;
 
         return connectDragSource(
@@ -157,7 +186,7 @@ class Card extends React.Component<
     }
 }
 
-export default DropTarget<CardProps, CardTargetCollectedProps>(
+export default connect()(DropTarget<CardProps, CardTargetCollectedProps>(
     ItemTypes.CARD,
     cardTarget,
     (connect: DropTargetConnector) => ({
@@ -172,4 +201,4 @@ export default DropTarget<CardProps, CardTargetCollectedProps>(
             isDragging: monitor.isDragging(),
         }),
     )(Card),
-);
+));
